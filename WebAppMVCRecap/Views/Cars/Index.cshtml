@@ -16,16 +16,8 @@
     </div>
     @foreach (var item in Model)
     {
-        <div class="row" id="@("car" + item.Id)">
-            <div class="col-2">@item.Id</div>
-            <div class="col-3">@item.Brand</div>
-            <div class="col-3">@item.Name</div>
-            <div class="col-4">
-                <button 
-                        class="btn btn-danger" 
-                        onclick="DeleteListItem('@("car" + item.Id)','@Url.Action("Delete","Cars",new { id = item.Id})')"
-                        >Delete</button>
-            </div>
-        </div>
+        <partial name="_CarRow" model="item" />
     }
 </div>
+
+
