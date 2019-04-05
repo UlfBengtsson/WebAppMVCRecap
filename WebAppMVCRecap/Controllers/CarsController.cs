@@ -10,12 +10,16 @@ namespace WebAppMVCRecap.Controllers
     public class CarsController : Controller
     {
 
-        // Don´t do this
-        static List<Car> cars = new List<Car>();
+        readonly ICarsRepository _carsRepository;
+
+        public CarsController(ICarsRepository carsRepository)
+        {
+            _carsRepository = carsRepository;
+        }
 
         public IActionResult Index()
         {
-            return View(cars);
+            return View(_carsRepository.AllCars());
         }
 
         [HttpGet]
@@ -28,7 +32,7 @@ namespace WebAppMVCRecap.Controllers
         {
             if (ModelState.IsValid)
             {
-                cars.Add(car);
+                _carsRepository.Create(car.Brand , car.Name);
                 return RedirectToAction("Index");
             }
             return View(car);

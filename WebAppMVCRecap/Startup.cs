@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebAppMVCRecap.Models;
 
 namespace WebAppMVCRecap
 {
@@ -27,6 +28,8 @@ namespace WebAppMVCRecap
         {
             //services.AddDbContext<DbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("BasicContext")));
+
+            services.AddSingleton<ICarsRepository, MockCarsRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
