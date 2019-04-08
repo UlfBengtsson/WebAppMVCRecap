@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "CreateUser";
+}
+
+<h1>CreateUser</h1>
+
+<form asp-action="CreateUser" method="post">
+
+    <input type="text" name="username" required placeholder="Username" />
+    <input type="text" name="email" required placeholder="E-mail" />
+    <input type="text" name="password" required placeholder="Password" />
+
+    <input type="submit" value="Create"/>
+</form>
