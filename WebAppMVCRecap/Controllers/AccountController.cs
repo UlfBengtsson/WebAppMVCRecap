@@ -32,19 +32,52 @@ namespace WebAppMVCRecap.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(string username, string password)
         {
-            IdentityUser user = new IdentityUser() { UserName = username };
+            var SignInResultr = await _signInManager.PasswordSignInAsync(username, password, false, false);
 
-            Microsoft.AspNetCore.Identity.SignInResult SignInResultr = await _signInManager.PasswordSignInAsync(user, password, false, false);
+            switch (SignInResultr.ToString())
+            {
+                case "Succeeded":
+                    return RedirectToAction("Index", "Home");
 
-            if (SignInResultr == Microsoft.AspNetCore.Identity.SignInResult.Success)
+                case "Failed":
+                    ViewBag.msg = "Failed - Username of/and Password is incorrect";
+                    break;
+                case "Lockedout":
+                    ViewBag.msg = "Locked Out";
+                    break;
+                default:
+                    ViewBag.msg = SignInResultr.ToString();
+                    break;
+            }
+
+            return View();
+
+            /*
+             * Alternative way to use SignInResult
+             * 
+            if (SignInResultr.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.msg = true;
-
-            return View();
+            else if (SignInResultr.IsLockedOut)
+            {
+                ViewBag.msg = "Locked Out";
+            }
+            else if (SignInResultr.RequiresTwoFactor)
+            {
+                ViewBag.msg = "Twofactor authorizon requierd";
+            }
+            else if (SignInResultr.IsNotAllowed)
+            {
+                ViewBag.msg = "Not allowed to login";
+            }
+            else//Failed
+            {
+                ViewBag.msg = "Failed - Username of/and Password is incorrect";
+            }
+            */
         }
+    
 
         public async Task<IActionResult> Logout()
         {

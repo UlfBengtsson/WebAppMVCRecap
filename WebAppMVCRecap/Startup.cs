@@ -41,6 +41,13 @@ namespace WebAppMVCRecap
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 1;
+
+                // User settings.
+                //options.User.RequireUniqueEmail = true;
+                // Lockout settings.
+                //options.Lockout.AllowedForNewUsers = true;
+                //options.Lockout.MaxFailedAccessAttempts = 3;
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
             });
 
             services.Configure<PasswordHasherOptions>(option =>
@@ -73,6 +80,9 @@ namespace WebAppMVCRecap
 
             app.UseMvc(routes =>
             {
+                //special route
+
+                //fallback to default
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

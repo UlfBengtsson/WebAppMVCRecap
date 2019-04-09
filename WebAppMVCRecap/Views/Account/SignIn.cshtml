@@ -7,13 +7,13 @@
 
 @if (ViewBag.msg != null)
 {
-    <p style="color:red">Username and/or Password is incorrect</p>
+    <p style="color:red">Status: @ViewBag.msg</p>
 }
 
 <form asp-action="SignIn" method="post">
 
     <input type="text" name="username" required placeholder="Username" />
-    <input type="text" name="password" required placeholder="Password" />
+    <input type="password" name="password" required placeholder="Password" />
 
     <input type="submit" value="Login" />
 
