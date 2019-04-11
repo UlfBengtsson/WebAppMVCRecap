@@ -1,4 +1,4 @@
-﻿
+﻿@model CreateUserVM
 @{
     ViewData["Title"] = "CreateUser";
 }
@@ -7,9 +7,17 @@
 
 <form asp-action="CreateUser" method="post">
 
-    <input type="text" name="username" required placeholder="Username" />
-    <input type="email" name="email" required placeholder="E-mail" />
-    <input type="password" name="password" required placeholder="Password" />
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" />
 
-    <input type="submit" value="Create"/>
+    <label asp-for="Email"></label>
+    <input asp-for="Email" />
+
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
+
+    <label asp-for="ConfirmPassword"></label>
+    <input asp-for="ConfirmPassword" />
+
+    <input type="submit" value="Create" />
 </form>

@@ -78,6 +78,8 @@ namespace WebAppMVCRecap
             app.UseStaticFiles();
             //app.UseCookiePolicy();
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 //special route

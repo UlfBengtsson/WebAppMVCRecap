@@ -30,29 +30,36 @@ namespace WebAppMVCRecap.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> SignIn(string username, string password)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn(LoginVM login)
         {
-            var SignInResultr = await _signInManager.PasswordSignInAsync(username, password, false, false);
 
-            switch (SignInResultr.ToString())
+            if (ModelState.IsValid)
             {
-                case "Succeeded":
-                    return RedirectToAction("Index", "Home");
+                var SignInResultr = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false);
 
-                case "Failed":
-                    ViewBag.msg = "Failed - Username of/and Password is incorrect";
-                    break;
-                case "Lockedout":
-                    ViewBag.msg = "Locked Out";
-                    break;
-                default:
-                    ViewBag.msg = SignInResultr.ToString();
-                    break;
+                switch (SignInResultr.ToString())
+                {
+                    case "Succeeded":
+                        return RedirectToAction("Index", "Home");
+
+                    case "Failed":
+                        ViewBag.msg = "Failed - Username of/and Password is incorrect";
+                        break;
+                    case "Lockedout":
+                        ViewBag.msg = "Locked Out";
+                        break;
+                    default:
+                        ViewBag.msg = SignInResultr.ToString();
+                        break;
+                }
             }
 
-            return View();
+            
 
-            /*
+            return View(login);
+
+            /**
              * Alternative way to use SignInResult
              * 
             if (SignInResultr.Succeeded)
@@ -75,7 +82,7 @@ namespace WebAppMVCRecap.Controllers
             {
                 ViewBag.msg = "Failed - Username of/and Password is incorrect";
             }
-            */
+            **/
         }
     
 
@@ -94,12 +101,15 @@ namespace WebAppMVCRecap.Controllers
         }
         [AllowAnonymous]//temp
         [HttpPost]
-        public async Task<IActionResult> CreateUser(string username, string email, string password)
+        public async Task<IActionResult> CreateUser(CreateUserVM createUser)
         {
-            IdentityUser user = new IdentityUser() { UserName = username, Email = email };
-            await _userManager.CreateAsync(user, password);
+            if (ModelState.IsValid)
+            {
+                IdentityUser user = new IdentityUser() { UserName = createUser.UserName, Email = createUser.Email };
+                await _userManager.CreateAsync(user, createUser.Password);
+            }
 
-            return View();
+            return View(createUser);
         }
 
 

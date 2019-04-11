@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginVM
 @{
     ViewData["Title"] = "SignIn";
 }
@@ -10,11 +10,14 @@
     <p style="color:red">Status: @ViewBag.msg</p>
 }
 
-<form asp-action="SignIn" method="post">
+    <form asp-action="SignIn" method="post">
 
-    <input type="text" name="username" required placeholder="Username" />
-    <input type="password" name="password" required placeholder="Password" />
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
 
-    <input type="submit" value="Login" />
+        <label asp-for="Password" ></label>
+        <input asp-for="Password" />
 
-</form>
+        <input type="submit" value="Login" />
+
+    </form>
